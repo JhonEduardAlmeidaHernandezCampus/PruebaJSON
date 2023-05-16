@@ -1,0 +1,137 @@
+*{
+    font-family: 'Lobster', cursive;
+}
+
+body{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/* Barra de botones */
+.contenedorOpciones {
+    background-color: black;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    width: 180px;
+    height: 100vh;
+    justify-content: center;
+}
+
+.imagenNave{
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.imagenNave img{
+    width: 100%;
+}
+
+.opciones{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.opciones button{
+    width: 80%;
+    padding: 10px;
+    margin: 10px;
+    border-left: 1px solid rgb(77, 103, 190);
+    border-top: 1px solid rgb(77, 103, 190);
+    border-bottom: none;
+    border-right: none;
+    box-shadow: -7px -7px 10px rgb(21, 32, 70);
+    background-color: transparent;
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+/* -------------------------------------------------- */
+
+/* Barra Titulo */
+.titulo{
+    position :absolute;
+    width: calc(100% - 180px);
+    height: 120px;
+    background-color:black;
+    color: rgb(51, 53, 184);
+    font-size: 1.4rem;
+    top: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.titulo::after{
+    content: "Centro Aeroespacial";
+    position :absolute;
+    height: 120px;
+    color: white;
+    font-size: 2.8rem;
+    top: 34px;
+    left: 50%;
+    transform: translateX(-51%);
+}
+/* ----------------------------------- */
+
+/* Contenedores de informacion */
+.contenedoresInfo{
+    box-shadow: -7px -7px 10px rgb(21, 32, 70);
+    width: calc(100% - 180px);
+    height: calc(100% - 120px);
+    top: calc(0% + 120px);
+    right: 0;
+    overflow: auto;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    background-color: black;
+}
+
+.imagenFondoSpace {
+    width: 30%;
+}
+/* --------------------------- */
+
+.contenedorFormBton{
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    width: 40%;
+    left: 40%; 
+}
+
+.devolverInfo{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    left: 0;
+    top: 91%;
+}
+
+.devolverInfo table{
+    color: white;
+    width: 90%;
+}
+
+.devolverInfo table thead th{
+    border-right: 1px solid rgb(12, 54, 192);
+    border-bottom: 1px solid rgb(12, 54, 192);
+    box-shadow: 2px 2px 10px rgb(21, 32, 70);
+    text-align: center;
+    width: 1%;
+}
+
+.devolverInfo table tbody td{
+    border-bottom: 1px solid rgb(169, 182, 226);
+    box-shadow: 0px 3px 10px rgb(21, 32, 70);
+    text-align: center;
+    width: 1%;
+}

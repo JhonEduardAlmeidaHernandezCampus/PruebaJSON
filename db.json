@@ -1,0 +1,54 @@
+{
+  "reclutas": [
+    {
+      "NombreRecluta": "12",
+      "CedulaRecluta": "12",
+      "EdadRecluta": "12",
+      "DirecciónRecluta": "12",
+      "TeléfonoRecluta": "12",
+      "EmailRecluta": "12",
+      "NacimientoRecluta": "2023-05-18",
+      "IngresoRecluta": "2023-05-18",
+      "teamId": 1,
+      "id": 1
+    }
+  ],
+  "teams": [
+    {
+      "nameTeam": "Sputnik",
+      "nameTrainer": "Miguel",
+      "id": 1
+    }
+  ],
+  "skills": [
+    {
+      "nameSkill": "HTML",
+      "id": 1
+    },
+    {
+      "nameSkill": "CSS",
+      "id": 2
+    }
+  ],
+  "moduloSkill": [
+    {
+      "nameModulo": "Trainer",
+      "id_Skills": "CSS",
+      "id": 2
+    }
+  ],
+  "evaluacion": [
+    {
+      "id_Reclutas": "1",
+      "id_Modulos": "Trainer",
+      "nota": "20",
+      "id": 1
+    },
+    {
+      "id_Reclutas": "Jhon Eduard Almeida Hernandez",
+      "id_Modulos": "Camper",
+      "nota": "13",
+      "id": 2
+    }
+  ]
+}
