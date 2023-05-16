@@ -26,22 +26,30 @@
         <input type="date" name="IngresoRecluta">
 
         <label for="">Team: </label>
-        <select name="id_Team" id="optionTeam"></select>
+        <select name="teamId" id="optionTeam"></select>
 
         <input type="submit" value="AGREGAR">
     </form>
 </div>
 <div class="btns">
     <button id="btnMostraReclutas">VER REGISTROS</button>
-    <button>FILTRAR MENORES</button>
+
+    <label for="">FILTRAR TEAM</label><br><br>
+    <select id="filterTeam"></select>
+
+    <button id="btnFiltrarEdad">FILTRAR MENORES</button>
+
     <button>FILTRAR POR FECHA</button>
-    <button>FILTRAR POR TEAMS</button>
 </div>
 
 <div class="devolverInfo" id="devolverInfo"></div>
 
 
-<style>
+<style> 
+    *{
+        font-family: 'Lobster', cursive;
+    }
+
     .formulario{
         margin-top: 10%;
         color: white;
@@ -66,10 +74,10 @@
     .formulario label{
         text-align: right;
         margin-top: 52px;
-        width: 130px;
+        width: 140px;
         height: auto;
         position: absolute;
-        left: 10px;
+        left: 5px;
     }
 
     .formulario input{
@@ -104,19 +112,8 @@
         box-shadow: 2px 2px 10px rgb(21, 32, 70);
     }
 
-    .formulario button{
-        color: white;
-        margin-bottom:20px;
-        padding: 14px;
-        margin-left: 50%;
-        transform: translateX(-50%);
-        outline: none;
-        background-color: transparent;
-        border-right: 1px solid rgb(12, 54, 192);
-        border-bottom: 1px solid rgb(12, 54, 192);
-        box-shadow: 2px 2px 10px rgb(21, 32, 70);
-        border-left: none;
-        border-top: none;
+    .formulario input[type=submit]{ 
+        font-family: 'Lobster', cursive;
     }
 
     input[type=number]::-webkit-inner-spin-button, 
@@ -127,17 +124,23 @@
 
     .btns{
         width: 100%;
+        position: absolute;
+        left: 0;
         margin-top: 20px;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         justify-content: center;
         align-items: center;
     }
 
+    .btns label{
+        color: white;
+    }
+
     .btns button{
-        width: 50%;
+        width: 13%;
         padding: 4px;
-        margin-top: 10px;
+        margin: 10px;
         color: white;
         background-color: transparent;
         border-right: 1px solid rgb(12, 54, 192);
@@ -146,6 +149,24 @@
         border-top: none;
         cursor: pointer;
         box-shadow: 2px 2px 10px rgb(21, 32, 70);
+    }
+
+    .btns select{
+        width: 10%;
+        padding: 4px;
+        margin: 10px;
+        color: white;
+        background-color: transparent;
+        border-right: 1px solid rgb(12, 54, 192);
+        border-bottom: 1px solid rgb(12, 54, 192);
+        border-left: none;
+        border-top: none;
+        cursor: pointer;
+        box-shadow: 2px 2px 10px rgb(21, 32, 70);
+    }
+
+    .btns option{
+        color: rgb(1, 60, 255);
     }
 
     .formulario input[type=submit]{
@@ -160,7 +181,7 @@
         width: 100%;
         height: auto;
         left: 0;
-        top: 91%;
+        top: 87%;
     }
 
     .devolverInfo table{

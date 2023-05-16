@@ -18,7 +18,11 @@ export default class myRecluta extends HTMLElement {
     }
 
     handleEliminar(e){
-        (e.type === "click") ? this.eliminarRecluta(e) : undefined
+        (e.type === "click") ? this.eliminarRecluta(e) : undefined;
+    }
+
+    handleEventFIlter(e){
+        (e.type === "click") ? this.filtrarEdad(e) : this.filtrarTeam(e);
     }
 
     myReclutas(e){
@@ -102,10 +106,59 @@ export default class myRecluta extends HTMLElement {
                         // Le inserta la informacion la input 
                         this.selectTeam.innerHTML = event.data;
 
+                        this.selectTeam = this.shadowRoot.querySelector("#filterTeam");
+                        this.selectTeam.innerHTML = event.data;
+
                         wsOptionsTeams.terminate()
                     })
                 wsMyTeams.terminate()
             })
+    }
+
+    filtrarEdad(){
+        let wsEdad = new Worker("storage/wsMyReclutas.js", {type:"module"});
+        wsEdad.postMessage({module:"consultarReclutasEdad"})
+
+        wsEdad.addEventListener("message", (e) => {
+
+            let wsFilterEdad = new Worker("storage/Tablas/wsMyTablas.js", {type: "module"})
+            wsFilterEdad.postMessage({module:"mostrarReclutas", data: e.data})
+
+            wsFilterEdad.addEventListener("message", (event) => {
+
+                this.devolverInfo = this.shadowRoot.querySelector("#devolverInfo");
+                this.devolverInfo.innerHTML = event.data;
+
+                wsFilterEdad.terminate();
+            })
+            
+        wsEdad.terminate();
+
+        })
+    }
+
+    filtrarTeam(e){
+        let data = e.target.value;
+         let wsConsultarReclutas = new Worker("storage/wsMyReclutas.js", {type: "module"});
+         wsConsultarReclutas.postMessage({module : "consultarReclutas"});
+
+        wsConsultarReclutas.addEventListener("message", (evento) =>{
+
+            wsConsultarReclutas.terminate();
+
+            let wsFilter = new Worker("storage/Tablas/wsMyTablas.js", {type : "module"})
+            let newData = evento.data.filter(recluta => recluta.teamId == data)
+            wsFilter.postMessage({module:"mostrarReclutas", data: newData})
+
+            wsFilter.addEventListener("message", (event) => {
+
+                this.devolverInfo = this.shadowRoot.querySelector("#devolverInfo");
+                this.devolverInfo.innerHTML = event.data;
+
+                wsFilter.terminate();
+
+            })
+        });
     }
 
     connectedCallback() {
@@ -119,6 +172,13 @@ export default class myRecluta extends HTMLElement {
 
             // Ejecuta la funcion en el Callback para que aparezcan las opciones 
             this.mostrarOpciones();
+
+            this.btnFiltrarEdad = this.shadowRoot.querySelector("#btnFiltrarEdad")
+            this.btnFiltrarEdad.addEventListener("click", this.handleEventFIlter.bind(this))
+
+
+            this.filterTeam = this.shadowRoot.querySelector("#filterTeam");
+            this.filterTeam.addEventListener("change", this.handleEventFIlter.bind(this))
         })
     }
 }

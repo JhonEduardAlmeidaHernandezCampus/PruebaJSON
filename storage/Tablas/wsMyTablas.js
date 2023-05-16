@@ -27,7 +27,7 @@ export let wsMyTablas = {
                                                                     <td>${val.EmailRecluta}</td>
                                                                     <td>${val.NacimientoRecluta}</td>
                                                                     <td>${val.IngresoRecluta}</td>
-                                                                    <td>${val.team.nameTeam}</td>
+                                                                    <td>${val.teamId}</td>
                                                                     <td><button class="eliminar" id="${val.id}">Eliminar</button></td>
                                                                 </tr>
                                                              `).join("")}
