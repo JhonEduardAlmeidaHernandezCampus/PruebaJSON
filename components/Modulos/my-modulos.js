@@ -11,6 +11,10 @@ export default class myModulos extends HTMLElement {
         this.attachShadow({ mode: "open" });
     }
 
+    handleInput(e){
+        (e.type === "input") ? this.buscador(e) : undefined; 
+    }
+
     handleEvent(e) {
         e.preventDefault();
         (e.type === "submit") ? this.myModulos(e) : undefined;
@@ -77,6 +81,27 @@ export default class myModulos extends HTMLElement {
             })
     }
 
+    buscador(e){
+        let obtenerInput = e.target.value
+        let wsPeticionBuscador = new Worker("storage/wsMyModulos.js", {type: "module"});
+            wsPeticionBuscador.postMessage({module: "consultarModulosInput", data : obtenerInput})
+
+            wsPeticionBuscador.addEventListener("message", (e) =>{
+
+                let wsMostrarDatos = new Worker("storage/Tablas/wsMyTablas.js", {type : "module"})
+                wsMostrarDatos.postMessage({module:"mostrarModulos", data: e.data})
+
+                wsMostrarDatos.addEventListener("message", (event) => {
+
+                    this.devolverInfo = this.shadowRoot.querySelector("#devolverInfo");
+                    this.devolverInfo.innerHTML = event.data;
+
+                    wsMostrarDatos.terminate();
+                })
+            wsPeticionBuscador.terminate();
+        })
+    }
+
     eliminarModulo(e){
         let confirmar = confirm(`¿Estas seguro que deseas eliminar este Modulo?`)
 
@@ -100,6 +125,9 @@ export default class myModulos extends HTMLElement {
 
             this.btnMostrarModulos = this.shadowRoot.querySelector("#btnMostrarModulos")
             this.btnMostrarModulos.addEventListener("click", this.handleEvent.bind(this))
+
+            this.InputBuscador = this.shadowRoot.querySelector("#Buscador");
+            this.InputBuscador.addEventListener("input", this.handleInput.bind(this))
 
             this.mostrarOpciones();
         })

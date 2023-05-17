@@ -11,6 +11,10 @@ export default class mySkills extends HTMLElement {
         this.attachShadow({ mode: "open" });
     }
 
+    handleInput(e){
+        (e.type === "input") ? this.buscador(e) : undefined; 
+    }
+
     handleEvent(e) {
         e.preventDefault();
         (e.type === "submit") ? this.mySkills(e) : undefined;
@@ -63,6 +67,27 @@ export default class mySkills extends HTMLElement {
             })
     }
 
+    buscador(e){
+        let obtenerInput = e.target.value
+        let wsPeticionBuscador = new Worker("storage/wsMySkills.js", {type: "module"});
+            wsPeticionBuscador.postMessage({module: "consultarSkillsInput", data : obtenerInput})
+
+            wsPeticionBuscador.addEventListener("message", (e) =>{
+
+                let wsMostrarDatos = new Worker("storage/Tablas/wsMyTablas.js", {type : "module"})
+                wsMostrarDatos.postMessage({module:"mostrarSkills", data: e.data})
+
+                wsMostrarDatos.addEventListener("message", (event) => {
+
+                    this.devolverInfo = this.shadowRoot.querySelector("#devolverInfo");
+                    this.devolverInfo.innerHTML = event.data;
+
+                    wsMostrarDatos.terminate();
+                })
+            wsPeticionBuscador.terminate();
+        })
+    }
+
     eliminarSkills(e){
         let confirmar = confirm(`¿Estas seguro que deseas eliminar esta Skill?`)
 
@@ -86,6 +111,9 @@ export default class mySkills extends HTMLElement {
 
             this.btnMostraSkill = this.shadowRoot.querySelector("#btnMostrarSkill")
             this.btnMostraSkill.addEventListener("click", this.handleEvent.bind(this))
+
+            this.InputBuscador = this.shadowRoot.querySelector("#Buscador");
+            this.InputBuscador.addEventListener("input", this.handleInput.bind(this))
         })
     }
 }

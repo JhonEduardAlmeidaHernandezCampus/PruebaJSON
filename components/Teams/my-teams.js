@@ -11,6 +11,10 @@ export default class myTeams extends HTMLElement {
         this.attachShadow({ mode: "open" });
     }
 
+    handleInput(e){
+        (e.type === "input") ? this.buscador(e) : undefined; 
+    }
+
     handleEvent(e) {
         e.preventDefault();
         (e.type === "submit") ? this.myTeam(e) : undefined;
@@ -58,6 +62,27 @@ export default class myTeams extends HTMLElement {
             })
     }
 
+    buscador(e){
+        let obtenerInput = e.target.value
+        let wsPeticionBuscador = new Worker("storage/wsMyTeams.js", {type: "module"});
+            wsPeticionBuscador.postMessage({module: "consultarTeamsInput", data : obtenerInput})
+
+            wsPeticionBuscador.addEventListener("message", (e) =>{
+
+                let wsMostrarDatos = new Worker("storage/Tablas/wsMyTablas.js", {type : "module"})
+                wsMostrarDatos.postMessage({module:"mostrarTeams", data: e.data})
+
+                wsMostrarDatos.addEventListener("message", (event) => {
+
+                    this.devolverInfo = this.shadowRoot.querySelector("#devolverInfo");
+                    this.devolverInfo.innerHTML = event.data;
+
+                    wsMostrarDatos.terminate();
+                })
+            wsPeticionBuscador.terminate();
+        })
+    }
+
     eliminarTeam(e){
         let confirmar = confirm(`¿Estas seguro que deseas eliminar este Team?`)
 
@@ -81,6 +106,9 @@ export default class myTeams extends HTMLElement {
 
             this.btnMostrarTeams = this.shadowRoot.querySelector("#btnMostrarTeams")
             this.btnMostrarTeams.addEventListener("click", this.handleEvent.bind(this))
+
+            this.InputBuscador = this.shadowRoot.querySelector("#Buscador");
+            this.InputBuscador.addEventListener("input", this.handleInput.bind(this))
         })
     }
 }

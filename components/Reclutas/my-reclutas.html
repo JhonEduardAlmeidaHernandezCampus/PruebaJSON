@@ -42,6 +42,10 @@
     <button id="btnFiltrarFecha">FILTRAR POR FECHA</button>
 </div>
 
+<div class="inputBuscador">
+    <input type="text" id="buscador" placeholder="Buscar">
+</div>
+
 <div class="devolverInfo" id="devolverInfo"></div>
 
 
@@ -181,7 +185,7 @@
         width: 100%;
         height: auto;
         left: 0;
-        top: 87%;
+        top: 88%;
     }
 
     .devolverInfo table{
@@ -202,5 +206,27 @@
         box-shadow: 0px 3px 10px rgb(21, 32, 70);
         text-align: center;
         width: 1%;
+    }
+
+    .inputBuscador{
+        width: 100%;
+        position: absolute;
+        left: 0;
+        top: 83%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .inputBuscador input{
+        width: 23%;
+        padding: 5px;
+        outline: none;
+        text-align: center;
+        box-shadow: 13px 13px 10px rgb(21, 32, 70);
+        color: rgb(1, 60, 255);
+        border-right: 1px solid rgb(12, 54, 192);
+        border-bottom: 1px solid rgb(12, 54, 192);
+        border-left: none;
+        border-top: none;
     }
 </style>

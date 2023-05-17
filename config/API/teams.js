@@ -18,6 +18,14 @@ const consultarTeams = async () =>{
     return await(await fetch(`http://localhost:${puerto}/teams`, config)).json()
 }
 
+const consultarTeamsInput = async (data) =>{
+    const config = {
+        method : "GET",
+        headers : header,
+    }   
+    return await(await fetch(`http://localhost:${puerto}/teams?nameTeam_like=${data}`, config)).json()
+}
+
 const EliminarTeam = async (id) =>{
     const config = {
         method : "DELETE",
@@ -29,5 +37,6 @@ const EliminarTeam = async (id) =>{
 export default {
     agregarTeams,
     consultarTeams,
+    consultarTeamsInput,
     EliminarTeam
 }

@@ -11,6 +11,10 @@ export default class myRecluta extends HTMLElement {
         this.attachShadow({ mode: "open" });
     }
 
+    handleInput(e){
+        (e.type === "input") ? this.buscador(e) : undefined; 
+    }
+
     handleEvent(e) {
         e.preventDefault();
         (e.type === "submit") ? this.myReclutas(e) : undefined;
@@ -174,7 +178,7 @@ export default class myRecluta extends HTMLElement {
         wsConsultarReclutasFecha.addEventListener("message", (evento) =>{
 
             let wsFilterFecha = new Worker("storage/Tablas/wsMyTablas.js", {type : "module"})
-            wsFilterFecha.postMessage({module:"mostrarReclutas", data: evento.datos})
+            wsFilterFecha.postMessage({module:"mostrarReclutas", data: evento.data})
 
             wsFilterFecha.addEventListener("message", (event) => {
 
@@ -185,6 +189,27 @@ export default class myRecluta extends HTMLElement {
             })
         wsConsultarReclutasFecha.terminate();    
         });
+    }
+
+    buscador(e){
+        let obtenerInput = e.target.value
+        let wsPeticionBuscador = new Worker("storage/wsMyReclutas.js", {type: "module"});
+            wsPeticionBuscador.postMessage({module: "consultarReclutasInput", data : obtenerInput})
+
+            wsPeticionBuscador.addEventListener("message", (e) =>{
+
+                let wsMostrarDatos = new Worker("storage/Tablas/wsMyTablas.js", {type : "module"})
+                wsMostrarDatos.postMessage({module:"mostrarReclutas", data: e.data})
+
+                wsMostrarDatos.addEventListener("message", (event) => {
+
+                    this.devolverInfo = this.shadowRoot.querySelector("#devolverInfo");
+                    this.devolverInfo.innerHTML = event.data;
+
+                    wsMostrarDatos.terminate();
+                })
+            wsPeticionBuscador.terminate();
+        })
     }
 
     connectedCallback() {
@@ -207,6 +232,9 @@ export default class myRecluta extends HTMLElement {
 
             this.btnFiltrarFecha = this.shadowRoot.querySelector("#btnFiltrarFecha");
             this.btnFiltrarFecha.addEventListener("click", this.handleEventFilter.bind(this))
+
+            this.InputBuscador = this.shadowRoot.querySelector("#buscador");
+            this.InputBuscador.addEventListener("input", this.handleInput.bind(this))
         })
     }
 }

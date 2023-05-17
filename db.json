@@ -30,7 +30,23 @@
       "id": 3
     }
   ],
-  "skills": [],
-  "moduloSkill": [],
+  "skills": [
+    {
+      "nameSkill": "HTML",
+      "id": 1
+    }
+  ],
+  "moduloSkill": [
+    {
+      "nameModulo": "dasd",
+      "id_Skills": "HTML",
+      "id": 1
+    },
+    {
+      "nameModulo": "sadsad",
+      "id_Skills": "HTML",
+      "id": 2
+    }
+  ],
   "evaluacion": []
 }

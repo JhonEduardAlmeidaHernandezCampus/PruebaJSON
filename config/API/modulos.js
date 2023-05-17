@@ -7,7 +7,7 @@ const agregarModulos = async (datos) => {
         headers: header,
         body: JSON.stringify(datos)
     }
-    return await( await fetch(`http://localhost:${puerto}/ModuloSkill`, config)).json()
+    return await( await fetch(`http://localhost:${puerto}/moduloSkill`, config)).json()
 }
 
 const consultarModulos = async () =>{
@@ -15,7 +15,15 @@ const consultarModulos = async () =>{
         method : "GET",
         headers : header,
     }   
-    return await(await fetch(`http://localhost:${puerto}/ModuloSkill`, config)).json()
+    return await(await fetch(`http://localhost:${puerto}/moduloSkill`, config)).json()
+}
+
+const consultarModulosInput = async (datos) =>{
+    const config = {
+        method : "GET", 
+        headers : header
+    }
+    return await(await fetch(`http://localhost:${puerto}/moduloSkill?nameModulo_like=${datos}`, config)).json()
 }
 
 const EliminarModulo = async (id) =>{
@@ -23,12 +31,13 @@ const EliminarModulo = async (id) =>{
         method : "DELETE",
         headers : header,
     }   
-    return await(await fetch(`http://localhost:${puerto}/ModuloSkill/${id}`, config)).json()
+    return await(await fetch(`http://localhost:${puerto}/moduloSkill/${id}`, config)).json()
 }
 
 
 export default {
     agregarModulos,
     consultarModulos,
+    consultarModulosInput,
     EliminarModulo
 }

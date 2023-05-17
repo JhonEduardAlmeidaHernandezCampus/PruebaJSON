@@ -18,6 +18,14 @@ const consultarSkills = async () =>{
     return await(await fetch(`http://localhost:${puerto}/Skills`, config)).json()
 }
 
+const consultarSkillsInput = async (data) =>{
+    const config = {
+        method : "GET",
+        headers : header,
+    }   
+    return await(await fetch(`http://localhost:${puerto}/Skills?nameSkill_like=${data}`, config)).json()
+}
+
 const EliminarSkill = async (id) =>{
     const config = {
         method : "DELETE",
@@ -29,5 +37,6 @@ const EliminarSkill = async (id) =>{
 export default {
     agregarSkills,
     consultarSkills,
+    consultarSkillsInput,
     EliminarSkill
 }

@@ -26,6 +26,14 @@ const consultarReclutasEdad = async () =>{
     return await(await fetch(`http://localhost:${puerto}/reclutas?EdadRecluta_gte=1&EdadRecluta_lte=18`, config)).json()
 }
 
+const consultarReclutasInput = async (data) =>{
+    const config = {
+        method : "GET",
+        headers : header,
+    }   
+    return await(await fetch(`http://localhost:${puerto}/reclutas?NombreRecluta_like=${data}`, config)).json()
+}
+
 const FiltrarReclutasFecha = async () =>{
     const config = {
         method : "GET",
@@ -47,5 +55,6 @@ export default {
     consultarReclutas,
     EliminarReclutas,
     consultarReclutasEdad,
-    FiltrarReclutasFecha
+    FiltrarReclutasFecha,
+    consultarReclutasInput
 }
