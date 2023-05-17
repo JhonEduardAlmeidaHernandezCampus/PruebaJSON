@@ -26,6 +26,14 @@ const consultarReclutasEdad = async () =>{
     return await(await fetch(`http://localhost:${puerto}/reclutas?EdadRecluta_gte=1&EdadRecluta_lte=18`, config)).json()
 }
 
+const FiltrarReclutasFecha = async () =>{
+    const config = {
+        method : "GET",
+        headers : header,
+    }   
+    return await(await fetch(`http://localhost:${puerto}/reclutas?IngresoRecluta_gte=2023-03-08`, config)).json()
+}
+
 const EliminarReclutas = async (id) =>{
     const config = {
         method : "DELETE",
@@ -38,5 +46,6 @@ export default {
     agregarReclutas,
     consultarReclutas,
     EliminarReclutas,
-    consultarReclutasEdad
+    consultarReclutasEdad,
+    FiltrarReclutasFecha
 }

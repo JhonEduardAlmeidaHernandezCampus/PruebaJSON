@@ -21,8 +21,14 @@ export default class myRecluta extends HTMLElement {
         (e.type === "click") ? this.eliminarRecluta(e) : undefined;
     }
 
-    handleEventFIlter(e){
-        (e.type === "click") ? this.filtrarEdad(e) : this.filtrarTeam(e);
+    handleEventFilter(e){
+        if (e.type === "click"){
+            this.filtrarEdad(e) 
+        } else if (e.type === "click"){
+            this.filtrarFecha(e)
+        } else{
+            this.filtrarTeam(e);
+        }
     }
 
     myReclutas(e){
@@ -139,8 +145,8 @@ export default class myRecluta extends HTMLElement {
 
     filtrarTeam(e){
         let data = e.target.value;
-         let wsConsultarReclutas = new Worker("storage/wsMyReclutas.js", {type: "module"});
-         wsConsultarReclutas.postMessage({module : "consultarReclutas"});
+        let wsConsultarReclutas = new Worker("storage/wsMyReclutas.js", {type: "module"});
+        wsConsultarReclutas.postMessage({module : "consultarReclutas"});
 
         wsConsultarReclutas.addEventListener("message", (evento) =>{
 
@@ -156,8 +162,28 @@ export default class myRecluta extends HTMLElement {
                 this.devolverInfo.innerHTML = event.data;
 
                 wsFilter.terminate();
-
             })
+        wsConsultarReclutas.terminate();    
+        });
+    }
+
+    filtrarFecha(e){
+        let wsConsultarReclutasFecha = new Worker("storage/wsMyReclutas.js", {type: "module"});
+        wsConsultarReclutasFecha.postMessage({module : "FiltrarReclutasFecha"});
+
+        wsConsultarReclutasFecha.addEventListener("message", (evento) =>{
+
+            let wsFilterFecha = new Worker("storage/Tablas/wsMyTablas.js", {type : "module"})
+            wsFilterFecha.postMessage({module:"mostrarReclutas", data: evento.datos})
+
+            wsFilterFecha.addEventListener("message", (event) => {
+
+                this.devolverInfo = this.shadowRoot.querySelector("#devolverInfo");
+                this.devolverInfo.innerHTML = event.data;
+
+                wsFilterFecha.terminate();
+            })
+        wsConsultarReclutasFecha.terminate();    
         });
     }
 
@@ -174,11 +200,13 @@ export default class myRecluta extends HTMLElement {
             this.mostrarOpciones();
 
             this.btnFiltrarEdad = this.shadowRoot.querySelector("#btnFiltrarEdad")
-            this.btnFiltrarEdad.addEventListener("click", this.handleEventFIlter.bind(this))
-
+            this.btnFiltrarEdad.addEventListener("click", this.handleEventFilter.bind(this))
 
             this.filterTeam = this.shadowRoot.querySelector("#filterTeam");
-            this.filterTeam.addEventListener("change", this.handleEventFIlter.bind(this))
+            this.filterTeam.addEventListener("change", this.handleEventFilter.bind(this))
+
+            this.btnFiltrarFecha = this.shadowRoot.querySelector("#btnFiltrarFecha");
+            this.btnFiltrarFecha.addEventListener("click", this.handleEventFilter.bind(this))
         })
     }
 }

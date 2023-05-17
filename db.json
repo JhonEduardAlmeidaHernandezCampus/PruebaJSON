@@ -11,30 +11,6 @@
       "IngresoRecluta": "2023-01-23",
       "teamId": "1",
       "id": 1
-    },
-    {
-      "NombreRecluta": "Carlos Villafrades",
-      "CedulaRecluta": "123123213",
-      "EdadRecluta": "22",
-      "DirecciónRecluta": "Transversal",
-      "TeléfonoRecluta": "12312312",
-      "EmailRecluta": "carlos@gmail.com",
-      "NacimientoRecluta": "2023-05-04",
-      "IngresoRecluta": "2023-05-06",
-      "teamId": "2",
-      "id": 2
-    },
-    {
-      "NombreRecluta": "Camilo",
-      "CedulaRecluta": "123123123",
-      "EdadRecluta": "17",
-      "DirecciónRecluta": "Transversal 61",
-      "TeléfonoRecluta": "123213123",
-      "EmailRecluta": "camilo@gmail.com",
-      "NacimientoRecluta": "2023-05-06",
-      "IngresoRecluta": "2023-06-01",
-      "teamId": "3",
-      "id": 3
     }
   ],
   "teams": [
