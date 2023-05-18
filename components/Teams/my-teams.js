@@ -104,11 +104,10 @@ export default class myTeams extends HTMLElement {
             this.formTeams = this.shadowRoot.querySelector("#formTeams")
             this.formTeams.addEventListener("submit", this.handleEvent.bind(this))
 
-            this.btnMostrarTeams = this.shadowRoot.querySelector("#btnMostrarTeams")
-            this.btnMostrarTeams.addEventListener("click", this.handleEvent.bind(this))
-
             this.InputBuscador = this.shadowRoot.querySelector("#Buscador");
             this.InputBuscador.addEventListener("input", this.handleInput.bind(this))
+
+            this.mostrarTeams()
         })
     }
 }

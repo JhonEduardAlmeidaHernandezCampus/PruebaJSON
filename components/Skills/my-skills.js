@@ -109,11 +109,10 @@ export default class mySkills extends HTMLElement {
             this.formSkills = this.shadowRoot.querySelector("#formSkills")
             this.formSkills.addEventListener("submit", this.handleEvent.bind(this))
 
-            this.btnMostraSkill = this.shadowRoot.querySelector("#btnMostrarSkill")
-            this.btnMostraSkill.addEventListener("click", this.handleEvent.bind(this))
-
             this.InputBuscador = this.shadowRoot.querySelector("#Buscador");
             this.InputBuscador.addEventListener("input", this.handleInput.bind(this))
+
+            this.mostrarSkills()
         })
     }
 }

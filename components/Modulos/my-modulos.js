@@ -123,12 +123,10 @@ export default class myModulos extends HTMLElement {
             this.formModulosSkills = this.shadowRoot.querySelector("#formModulosSkills")
             this.formModulosSkills.addEventListener("submit", this.handleEvent.bind(this))
 
-            this.btnMostrarModulos = this.shadowRoot.querySelector("#btnMostrarModulos")
-            this.btnMostrarModulos.addEventListener("click", this.handleEvent.bind(this))
-
             this.InputBuscador = this.shadowRoot.querySelector("#Buscador");
             this.InputBuscador.addEventListener("input", this.handleInput.bind(this))
 
+            this.mostrarModulos();
             this.mostrarOpciones();
         })
     }

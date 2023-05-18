@@ -2,14 +2,14 @@
   "reclutas": [
     {
       "NombreRecluta": "Jhon Almeida ",
-      "CedulaRecluta": "110239123",
+      "CedulaRecluta": "110239127",
       "EdadRecluta": "23",
       "DirecciónRecluta": "Calle 11B # 1A - 20",
       "TeléfonoRecluta": "3005559677",
       "EmailRecluta": "jhonhernandez.1899@gmail.com",
       "NacimientoRecluta": "1999-09-18",
       "IngresoRecluta": "2023-01-23",
-      "teamId": "1",
+      "teamId": "2",
       "id": 1
     }
   ],
@@ -32,21 +32,23 @@
   ],
   "skills": [
     {
-      "nameSkill": "HTML",
+      "nameSkill": "Evaluaciones",
       "id": 1
     }
   ],
   "moduloSkill": [
     {
-      "nameModulo": "dasd",
-      "id_Skills": "HTML",
+      "nameModulo": "Desarrollo web",
+      "id_Skills": "Evaluaciones",
       "id": 1
-    },
-    {
-      "nameModulo": "sadsad",
-      "id_Skills": "HTML",
-      "id": 2
     }
   ],
-  "evaluacion": []
+  "evaluacion": [
+    {
+      "id_Reclutas": "Jhon Almeida ",
+      "id_Modulos": "Desarrollo web",
+      "nota": "20",
+      "id": 1
+    }
+  ]
 }

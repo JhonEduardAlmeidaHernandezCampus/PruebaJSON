@@ -11,6 +11,10 @@ export default class myEvaluaciones extends HTMLElement {
         this.attachShadow({ mode: "open" });
     }
 
+    handleFilter(e){
+        (e.type === "input") ? this.filterBuscador(e) : this.filterMenorNota();
+    }
+
     handleEvent(e) {
         e.preventDefault();
         (e.type === "submit") ? this.myEvaluaciones(e) : undefined;
@@ -23,12 +27,15 @@ export default class myEvaluaciones extends HTMLElement {
 
     myEvaluaciones(e){
         e.preventDefault();
+        e.stopPropagation();
         const guardarDatos = Object.fromEntries(new FormData(e.target))
 
         const wsMyModulos = new Worker("storage/wsMyEvaluaciones.js", {type: "module"})
             wsMyModulos.postMessage({module: "agregarEvaluaciones", data: guardarDatos})
             wsMyModulos.addEventListener("message", (e) => {
                 wsMyModulos.terminate();
+
+                this.mostrarEvaluaciones();
             })
     }
 
@@ -58,7 +65,7 @@ export default class myEvaluaciones extends HTMLElement {
     }
 
     eliminarEvaluacion(e){
-        let confirmar = confirm(`¿Estas seguro que deseas eliminar este Team?`)
+        let confirmar = confirm(`¿Estas seguro que deseas eliminar esta Evaluación?`)
 
         if(confirmar == true){
             let id = e.target.id
@@ -67,7 +74,7 @@ export default class myEvaluaciones extends HTMLElement {
                 wsEvaluacion.postMessage({module:"EliminarEvaluacion", data: id})
                 wsEvaluacion.addEventListener("message", (e) => {
                     wsEvaluacion.terminate();
-                    alert("Team Eliminado exitosamente")
+                    alert("Evaluación Eliminado exitosamente")
            })
         }
     }
@@ -112,15 +119,60 @@ export default class myEvaluaciones extends HTMLElement {
             })
     }
 
+    filterBuscador(e){
+        let guardar = e.target.value
+
+        let wsPeticion = new Worker("storage/wsMyEvaluaciones.js", {type: "module"})
+        wsPeticion.postMessage({module: "filterInputEvaluacion", data : guardar})
+
+        wsPeticion.addEventListener("message", (event) =>{
+
+            let wsRecibirRegistros = new Worker("storage/Tablas/wsMyTablas.js", {type: "module"})
+                wsRecibirRegistros.postMessage({module : "mostrarEvaluaciones", data : event.data})
+
+                wsRecibirRegistros.addEventListener("message", (evento) => {
+
+                    this.devolverInfo = this.shadowRoot.querySelector("#devolverInfo")
+                    this.devolverInfo.innerHTML = evento.data;
+
+                    wsRecibirRegistros.terminate();
+                })
+            wsPeticion.terminate();
+        })
+    } 
+
+    filterMenorNota(){
+        let wsConsultaNota = new Worker("storage/wsMyEvaluaciones.js", {type: "module"})
+            wsConsultaNota.postMessage({module: "filterNotaEvaluacion"})
+            wsConsultaNota.addEventListener("message", (e) =>{
+
+                let wsDatosOptenidos = new Worker("storage/Tablas/wsMyTablas.js", {type: "module"})
+                    wsDatosOptenidos.postMessage({module: "mostrarEvaluaciones", data: e.data})
+
+                    wsDatosOptenidos.addEventListener("message", (evento) =>{
+
+                        this.devolverInfo = this.shadowRoot.querySelector("#devolverInfo")
+                        this.devolverInfo.innerHTML = evento.data;
+
+                        wsDatosOptenidos.terminate();
+                    })
+                wsConsultaNota.terminate();
+            })
+    }
+
     connectedCallback() {
         Promise.resolve(myEvaluaciones.components()).then(html => {
             this.shadowRoot.innerHTML = html;
             this.formEvaluaciones = this.shadowRoot.querySelector("#formEvaluaciones")
             this.formEvaluaciones.addEventListener("submit", this.handleEvent.bind(this))
 
-            this.btnMostrarEvaluaciones = this.shadowRoot.querySelector("#btnMostrarEvaluaciones")
-            this.btnMostrarEvaluaciones.addEventListener("click", this.handleEvent.bind(this))
+            this.Buscador = this.shadowRoot.querySelector("#Buscador");
+            this.Buscador.addEventListener("input", this.handleFilter.bind(this))
 
+            this.filtrarNota = this.shadowRoot.querySelector("#filtrarNotaMenor");
+            this.filtrarNota.addEventListener("click", this.handleFilter.bind(this))
+
+            this.mostrarEvaluaciones();
             this.mostrarOpcionesReclutas();
             this.mostrarOpcionesModulos();
         })

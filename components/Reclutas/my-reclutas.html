@@ -2,28 +2,28 @@
     <h1>Formulario Reclutas</h1>
     <form action="" id="formReclutas">
         <label for="" class="bg-danger">Nombre: </label>
-        <input type="text" name="NombreRecluta">
+        <input type="text" name="NombreRecluta" required>
 
         <label for="">Cedula: </label>
-        <input type="number" name="CedulaRecluta">
+        <input type="number" name="CedulaRecluta" required>
 
         <label for="">Edad: </label>
-        <input type="number" name="EdadRecluta">
+        <input type="number" name="EdadRecluta" required>
 
         <label for="">Dirección: </label>
-        <input type="text" name="DirecciónRecluta">
+        <input type="text" name="DirecciónRecluta" required>
 
         <label for="">Teléfono: </label>
-        <input type="number" name="TeléfonoRecluta">
+        <input type="number" name="TeléfonoRecluta" required>
 
         <label for="">Email: </label>
-        <input type="text" name="EmailRecluta">
+        <input type="email" name="EmailRecluta" required>
 
         <label for="">Fecha de Nacimiento: </label>
-        <input type="date" name="NacimientoRecluta">
+        <input type="date" name="NacimientoRecluta" required>
 
         <label for="">Fecha de Ingreso: </label>
-        <input type="date" name="IngresoRecluta">
+        <input type="date" name="IngresoRecluta" required>
 
         <label for="">Team: </label>
         <select name="teamId" id="optionTeam"></select>
@@ -32,8 +32,6 @@
     </form>
 </div>
 <div class="btns">
-    <button id="btnMostraReclutas">VER REGISTROS</button>
-
     <label for="">FILTRAR TEAM</label><br><br>
     <select id="filterTeam"></select>
 

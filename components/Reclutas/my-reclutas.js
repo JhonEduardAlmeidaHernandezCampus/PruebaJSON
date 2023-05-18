@@ -218,11 +218,7 @@ export default class myRecluta extends HTMLElement {
             this.myFormulario = this.shadowRoot.querySelector("#formReclutas")
             this.myFormulario.addEventListener("submit", this.handleEvent.bind(this))
 
-            this.btnMostraReclutas = this.shadowRoot.querySelector("#btnMostraReclutas")
-            this.btnMostraReclutas.addEventListener("click", this.handleEvent.bind(this))
-
             // Ejecuta la funcion en el Callback para que aparezcan las opciones 
-            this.mostrarOpciones();
 
             this.btnFiltrarEdad = this.shadowRoot.querySelector("#btnFiltrarEdad")
             this.btnFiltrarEdad.addEventListener("click", this.handleEventFilter.bind(this))
@@ -235,6 +231,9 @@ export default class myRecluta extends HTMLElement {
 
             this.InputBuscador = this.shadowRoot.querySelector("#buscador");
             this.InputBuscador.addEventListener("input", this.handleInput.bind(this))
+
+            this.mostrarOpciones();
+            this.mostrarReclutas();
         })
     }
 }

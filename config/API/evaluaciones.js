@@ -26,8 +26,26 @@ const EliminarEvaluacion = async (id) =>{
     return await(await fetch(`http://localhost:${puerto}/Evaluacion/${id}`, config)).json()
 }
 
+const filterInputEvaluacion = async(datos) => {
+    const config = {
+        method: "GET",
+        headers : header
+    }
+    return await(await fetch(`http://localhost:${puerto}/Evaluacion?id_Reclutas_like=${datos}`, config)).json();
+}
+
+const filterNotaEvaluacion = async() => {
+    const config = {
+        method: "GET",
+        headers : header
+    }
+    return await(await fetch(`http://localhost:${puerto}/Evaluacion?nota_gte=0&nota_lte=69`, config)).json();
+}
+
 export default {
     agregarEvaluaciones,
     consultarEvaluaciones,
-    EliminarEvaluacion
+    EliminarEvaluacion,
+    filterInputEvaluacion,
+    filterNotaEvaluacion
 }
